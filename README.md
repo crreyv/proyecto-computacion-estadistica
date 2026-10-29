@@ -3,7 +3,7 @@
 
 **Universidad Nacional de Colombia, sede de La Paz**
 
-**Curso:** Computación Estadística, Grupo I (semestre 2026-II). 
+**Curso:** Computación Estadística (semestre 2026-II). 
 
 **Docente:** Yoselin Nieto Gil
 
