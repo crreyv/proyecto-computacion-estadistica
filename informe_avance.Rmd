@@ -1,7 +1,7 @@
 ---
 title: "Avance del proyecto final: riesgo de pérdida en la serie GBP/USD"
 subtitle: "Computación Estadística 2026-II, Universidad Nacional de Colombia. Grupo 2"
-author: "[Nombres de los integrantes del grupo]"
+author: "[Adriana Jaimes, Crisdailyn Rey, John Rincón, Maria Vega]"
 date: "28 de octubre de 2026"
 lang: es
 output:
