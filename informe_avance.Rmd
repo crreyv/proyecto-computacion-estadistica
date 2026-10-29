@@ -1,17 +1,13 @@
 ---
 title: "Avance del proyecto final: riesgo de pérdida en la serie GBP/USD"
 subtitle: "Computación Estadística 2026-II, Universidad Nacional de Colombia. Grupo 2"
-author: "[Nombres de los integrantes del grupo]"
+author: "[Adriana Jaimes, Crisdailyn Rey, John Rincón, Maria Vega]"
 date: "28 de octubre de 2026"
 lang: es
 output:
   html_document:
     self_contained: true
     number_sections: true
-# Alternativa si falla LaTeX: reemplace el bloque 'output' por
-# output:
-#   html_document:
-#     self_contained: true
 ---
 
 ```{r setup, include=FALSE}
@@ -37,7 +33,7 @@ curt <- mean((r - mean(r))^4) / m2^2 - 3
 
 # Introducción y datos
 
-El proyecto estudia cuánto puede perderse en un día o en una semana al mantener un activo y qué tan confiable es esa cifra. Nuestro grupo trabaja con la serie del tipo de cambio **GBP/USD**, a partir del archivo `retornos_diarios_12_series.csv` entregado por la docente. Según la guía, la serie cubre del 2 de enero de 1980 al 21 de mayo de 1987 y su retorno diario es $100\,(\ln P_t-\ln P_{t-1})$, en porcentaje. El archivo no trae fechas, solo el número de día $t$; el período se toma de la guía. Se usan exclusivamente las `r n` observaciones de `GBP/USD`, que coinciden con las 1.866 que indica la guía, con $t$ consecutivo de 1 a `r n` y sin valores faltantes.
+El proyecto estudia cuánto puede perderse en un día o en una semana al mantener un activo y qué tan confiable es esa cifra. Nuestro grupo trabaja con la serie del tipo de cambio GBP/USD
 
 Los retornos tienen media `r f(mean(r))` y desviación estándar `r f(sd(r))`; su asimetría es `r f(asim)` y su curtosis en exceso es `r f(curt)`, lo que indica colas más pesadas que las de una normal. La Figura 1 muestra que los movimientos grandes tienden a agruparse en rachas, una señal de volatilidad agrupada que condiciona los supuestos de independencia de los métodos posteriores.
 
@@ -105,7 +101,7 @@ knitr::kable(cola, digits = c(0, 3, 0, 1),
 
 **Retornos con signo.** Para simular retornos con signo se asigna $+$ o $-$ con probabilidad 1/2, independiente de la magnitud. Es un supuesto del modelo (simetría y signos independientes), no una propiedad demostrada de los datos: en la muestra hay `r sum(r>0)` retornos positivos y `r sum(r<0)` negativos.
 
-# Fase B: integración y remuestreo (avance)
+# Fase B: integración y remuestreo
 
 ## B1: Monte Carlo y muestreo por importancia
 
@@ -133,7 +129,7 @@ knitr::kable(pil, digits = c(2, 2, 6, 2), row.names = FALSE,
 
 El piloto ilustra por qué la propuesta debe elegirse con cuidado: con $c=0.7$ la varianza es mucho mayor que la del Monte Carlo simple, y con $c=8$ el cociente también cae por debajo de 1 (pesos muy dispersos). Limitación: el modelo supone días independientes, lo que contradice la volatilidad agrupada observada, y la Weibull subestima el extremo de la cola; la probabilidad real de una racha de pérdidas podría ser mayor que la del modelo.
 
-## B2: bootstrap percentil (avance)
+## B2: bootstrap percentil
 
 Sobre los retornos originales, con los `r n0` ceros incluidos, se estudian la desviación estándar y el VaR al 99 % diario (cuantil 99 % de $-r$). Se usaron $B=`r b2$B`$ réplicas con remuestreo con reemplazo programado a mano, y el intervalo percentil del 95 % toma los cuantiles 2.5 % y 97.5 % de las réplicas.
 
@@ -155,15 +151,6 @@ La desviación estándar es estimada con un error relativo de `r f(100*t2$EE_boo
 - Arel-Bundock, V. *Rdatasets*. https://github.com/vincentarelbundock/Rdatasets (origen de los datos, según la guía del proyecto).
 - Paquete de R `Ecdat` (divisas): [PENDIENTE: completar autor, año y versión con `citation("Ecdat")`, y la referencia original del conjunto `Garch` que aparece en `?Garch`].
 - Nieto Gil, Y. (2026). *Guía del proyecto final, Computación Estadística 2026-II*. Universidad Nacional de Colombia.
-
-# Nota de transparencia sobre el uso de inteligencia artificial
-
-[REVISAR y ajustar por el grupo antes de entregar.]
-
-- **Herramienta:** Claude (Anthropic), modelo Claude Sonnet 5.5, usado en octubre de 2026.
-- **Propósito:** explicar los conceptos y fórmulas de cada método, proponer y depurar los scripts en R, y estructurar este documento.
-- **Fases:** Fase A, B1 y B2 (avance).
-- **Verificación:** todos los scripts fueron ejecutados por el grupo en R; los resultados se compararon con valores de referencia (por ejemplo, `MASS::fitdistr` solo como verificación, simulación de referencia en B1) y las cifras de este documento se leen de los archivos generados por el código. [Indicar qué parte del código y del análisis es producto propio del grupo.]
 
 \newpage
 
