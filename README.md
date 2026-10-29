@@ -2,9 +2,13 @@
 ### Riesgo de pérdida en la serie de retornos GBP/USD
 
 **Universidad Nacional de Colombia, sede de La Paz**
+
 **Curso:** Computación Estadística, Grupo I (semestre 2026-II). 
+
 **Docente:** Yoselin Nieto Gil
+
 **Grupo de trabajo:** Grupo 2
+
 **Integrantes:** 
 - Adriana Jaimes
 - Crisdailyn Rey Vargas
