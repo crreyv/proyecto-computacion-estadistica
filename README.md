@@ -1,4 +1,4 @@
-# Proyecto final de Computación Estadística 2026-II
+# Proyecto Final de Computación Estadística 2026-II
 ### Riesgo de pérdida en la serie de retornos GBP/USD
 
 **Universidad Nacional de Colombia, sede de La Paz**
