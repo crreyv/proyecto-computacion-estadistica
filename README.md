@@ -1,14 +1,20 @@
-<<<<<<< HEAD
+
 # Proyecto final de Computación Estadística 2026-II
+
 ### Riesgo de pérdida en la serie de retornos GBP/USD: simulación, remuestreo y mezclas
+
 **Universidad Nacional de Colombia, sede de La Paz**
-**Curso:** Computación Estadística, Grupo I (semestre 2026-II). **Docente:** Yoselin Nieto Gil
+
+**Curso:** Computación Estadística. 
+
+**Docente:** Yoselin Nieto Gil
+
 **Grupo de trabajo:** Grupo 2
 **Integrantes:**
--Adriana Jaimes
--Crisdailyn Rey Vargas
--John Rincón Toro
--Maria Vega Gutierrez
+- Adriana Jaimes
+- Crisdailyn Rey Vargas
+- John Rincón Toro
+- Maria Vega Gutierrez
 
 
 ---
