@@ -10,6 +10,7 @@
 **Docente:** Yoselin Nieto Gil
 
 **Grupo de trabajo:** Grupo 2
+
 **Integrantes:**
 - Adriana Jaimes
 - Crisdailyn Rey Vargas
@@ -240,16 +241,13 @@ Los datos provienen de los paquetes de R `Ecdat` (divisas e IBM) y `evir` (BMW y
 
 - Arel-Bundock, V. *Rdatasets*. https://github.com/vincentarelbundock/Rdatasets
 
-[Pendiente: completar la referencia del paquete `Ecdat` con `citation("Ecdat")` y la referencia original del conjunto `Garch` que aparece en `?Garch`.]
-
 Las referencias de prensa usadas para contextualizar los días de turbulencia están en `informe_final.Rmd`.
 
 ---
 
 ## Nota de transparencia sobre el uso de inteligencia artificial
 
-Para la creación de los **códigos en R** de este proyecto (los scripts `01` a `11`, `funciones_A.R`, `funciones_EM.R`, `run_all.R` y los borradores de `informe_avance.Rmd`, `informe_final.Rmd` y de este `README.md`) usamos **Claude**, de Anthropic (modelo Claude Sonnet 5.5, entre octubre y noviembre de 2026). Claude también se usó para explicar los conceptos, las fórmulas y el razonamiento de cada método, y para buscar y verificar las fuentes sobre los hechos del mercado citados en el informe.
+Para la creación de los códigos en R de este proyecto (los scripts `01` a `11`, `funciones_A.R`, `funciones_EM.R`, `run_all.R` usamos Claude, de Anthropic (modelo Claude Sonnet 5.5, entre octubre y noviembre de 2026). Claude también se usó para explicar los conceptos, las fórmulas y el razonamiento de cada método, y para buscar y verificar las fuentes sobre los hechos del mercado citados en el informe.
 
 Todos los scripts fueron ejecutados por el grupo en R, y los resultados se contrastaron con valores de referencia calculados de forma independiente (por ejemplo, `MASS::fitdistr` como verificación y las simulaciones de referencia de B1). Las cifras de los informes se leen directamente de los archivos que genera el código.
 
-[Completar: qué parte del código y del análisis es producto propio del grupo.]
