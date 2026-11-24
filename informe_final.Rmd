@@ -1,22 +1,14 @@
 ---
 title: "Riesgo de pérdida en la serie GBP/USD: simulación, remuestreo y mezclas"
-subtitle: "Proyecto final de Computación Estadística 2026-II, Universidad Nacional de Colombia. Grupo 2"
-author: "Adriana Jaimes, Crisdailyn Rey, John Rincón, Maria Vega"
-date: "Noviembre de 2026"
+subtitle: "Computación Estadística 2026-II, Universidad Nacional de Colombia. Grupo 2"
+author: "[Adriana Jaimes, Crisdailyn Rey, John Rincón, Maria Vega]"
+date: "25 de Noviembre de 2026"
 lang: es
 output:
   html_document:
     self_contained: true
     number_sections: true
-# Para PDF (requiere LaTeX: install.packages("tinytex"); tinytex::install_tinytex()),
-# reemplace el bloque 'output' anterior por:
-# output:
-#   pdf_document:
-#     latex_engine: xelatex
-#     number_sections: true
-#     fig_caption: true
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE,
                       fig.align = "center", out.width = "90%")
