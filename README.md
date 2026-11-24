@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 # Proyecto final de Computación Estadística 2026-II
 ### Riesgo de pérdida en la serie de retornos GBP/USD: simulación, remuestreo y mezclas
+=======
+# Proyecto Final de Computación Estadística 2026-II
+### Riesgo de pérdida en la serie de retornos GBP/USD
+>>>>>>> d30a926d7c2154bd26ce81c21e0d4d8cdff7b765
 
 **Universidad Nacional de Colombia, sede de La Paz**
 **Curso:** Computación Estadística, Grupo I (semestre 2026-II). **Docente:** Yoselin Nieto Gil
