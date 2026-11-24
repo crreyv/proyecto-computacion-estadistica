@@ -22,11 +22,11 @@
 
 ## 1. ¿De qué trata este proyecto?
 
-Los mercados financieros tienen días tranquilos y días turbulentos, y las pérdidas grandes se concentran en pocos días. El proyecto responde una sola pregunta: **¿cuánto puede perderse en un día o en una semana al mantener un activo, y qué tan confiable es ese número?**
+Los mercados financieros tienen días tranquilos y días turbulentos, y las pérdidas grandes se concentran en pocos días. El proyecto responde una sola pregunta: ¿cuánto puede perderse en un día o en una semana al mantener un activo, y qué tan confiable es ese número?
 
-Cada grupo trabaja con la serie de retornos diarios de un activo distinto y programa los métodos del curso **desde cero y sin cajas negras**: generación de variables aleatorias (Unidad 1), integración por Monte Carlo, muestreo por importancia, jackknife y bootstrap (Unidad 2), y modelos de mezcla con el algoritmo EM (Unidad 3).
+Cada grupo trabaja con la serie de retornos diarios de un activo distinto y programa los métodos del curso desde cero y sin cajas negras: generación de variables aleatorias (Unidad 1), integración por Monte Carlo, muestreo por importancia, jackknife y bootstrap, y modelos de mezcla con el algoritmo EM.
 
-Nuestra serie es **GBP/USD** (tipo de cambio de la libra esterlina frente al dólar, según la denominación de la guía del proyecto):
+Nuestra serie es GBP/USD (tipo de cambio de la libra esterlina frente al dólar, según la denominación de la guía del proyecto):
 
 | Característica | Valor |
 |---|---|
@@ -79,10 +79,10 @@ Los scripts buscan el archivo de datos en `data/` y, si no está allí, en la ca
 
 ## 4. Requisitos
 
-- **R** (versión 4.x o superior recomendada) y, opcionalmente, **RStudio**.
+- **R** (versión 4.x o superior recomendada) y, opcionalmente, RStudio.
 - Para compilar los informes: los paquetes `rmarkdown` y `knitr`.
 - Para generar los informes en PDF: una instalación de LaTeX (por ejemplo `tinytex::install_tinytex()`). Los informes también pueden generarse como HTML autónomo, sin LaTeX, que es la opción por defecto.
-- El paquete `MASS` (incluido en las instalaciones habituales de R) se usa **únicamente para verificar** nuestras estimaciones con `fitdistr`. Las funciones `pnorm` y `qnorm` de R base también se usan solo para comprobar nuestras implementaciones. Ninguna de ellas produce un resultado oficial.
+- El paquete `MASS` (incluido en las instalaciones habituales de R) se usa únicamente para verificar nuestras estimaciones con `fitdistr`. Las funciones `pnorm` y `qnorm` de R base también se usan solo para comprobar nuestras implementaciones. Ninguna de ellas produce un resultado oficial.
 
 Todo lo demás se implementó con funciones base de R (generador uniforme, `log`, `exp`, `sqrt`, ordenar, cuantiles, álgebra de matrices y gráficos).
 
@@ -105,23 +105,21 @@ La semilla aleatoria es fija: cada script ejecuta `set.seed(2026)` al inicio, y 
    rmarkdown::render("informe_final.Rmd")
    ```
 
-   El informe lee los resultados guardados en `resultados/` y las figuras de `figuras/`, así que sus números coinciden con los del código. **El archivo `.Rmd` debe estar en la misma carpeta que `resultados/` y `figuras/`.**
+   El informe lee los resultados guardados en `resultados/` y las figuras de `figuras/`, así que sus números coinciden con los del código. El archivo `.Rmd` debe estar en la misma carpeta que `resultados/` y `figuras/`.
 
 También puedes ejecutar cada script por separado, en el orden numérico. Cada uno depende de los archivos que dejan los anteriores en `resultados/` (por ejemplo, `03` a `06` usan `params_A.rds` de `02`, y `11` usa los resultados de `06` y `10`).
-
-Todas las rutas son **relativas**: no hay rutas locales del tipo `C:/Users/...`.
 
 ## 6. Qué hace cada script
 
 ### `01_datos.R`: datos, ceros y variable de trabajo
-Lee el CSV, filtra **solo** la serie `GBP/USD`, la ordena por `t` y verifica que coincide con la guía (1.866 datos, `t` consecutivo, sin valores faltantes). Cuenta los retornos exactamente iguales a cero y calcula su porcentaje. Construye la variable de trabajo de la Fase A, $x = |r|$ sin los ceros exactos, y calcula estadísticos descriptivos. Guarda `figuras/01_exploracion.png`.
+Lee el CSV, filtra solo la serie `GBP/USD`, la ordena por `t` y verifica que coincide con la guía (1.866 datos, `t` consecutivo, sin valores faltantes). Cuenta los retornos exactamente iguales a cero y calcula su porcentaje. Construye la variable de trabajo de la Fase A, $x = |r|$ sin los ceros exactos, y calcula estadísticos descriptivos. Guarda `figuras/01_exploracion.png`.
 
 ### `02_mle.R`: máxima verosimilitud y AIC
 Estima por máxima verosimilitud, con implementación propia, dos familias para $x$:
 - **Lognormal:** solución cerrada, $\hat\mu = \overline{\ln x}$ y $\hat\sigma^2 = \overline{(\ln x - \hat\mu)^2}$.
 - **Weibull:** $\hat\lambda^k = \overline{x^k}$ y la forma $\hat k$ como raíz de una ecuación que se resuelve con el **método de Newton**. Esa ecuación tiene raíz única porque su derivada es siempre positiva.
 
-Compara las familias con el **AIC**, verifica la convergencia desde varios valores iniciales y contrasta con `MASS::fitdistr` solo como verificación. Guarda `resultados/params_A.rds`.
+Compara las familias con el AIC, verifica la convergencia desde varios valores iniciales y contrasta con `MASS::fitdistr` solo como verificación. Guarda `resultados/params_A.rds`.
 
 ### `funciones_A.R` y `03_generadores.R`: generación de variables aleatorias
 Usan únicamente el generador uniforme base `runif`:
@@ -133,26 +131,26 @@ Usan únicamente el generador uniforme base `runif`:
 `03_generadores.R` compara medias, desviaciones y cuantiles simulados con sus valores teóricos y comprueba que $F(X)$ es uniforme.
 
 ### `04_validacion.R`: validación de las muestras simuladas
-Genera muestras sintéticas 20 veces más grandes que la real y las compara con los datos mediante: el gráfico de ajuste de densidades con **eje vertical logarítmico**, los gráficos **cuantil-cuantil**, la **distancia de Kolmogorov-Smirnov calculada a mano** (la función de error se programó por serie de Taylor) y los **cuantiles 50, 90 y 99**. Guarda `figuras/02_ajuste_log.png`, `figuras/03_qq.png` y `resultados/validacion_A.rds`.
+Genera muestras sintéticas 20 veces más grandes que la real y las compara con los datos mediante: el gráfico de ajuste de densidades con eje vertical logarítmico, los gráficos cuantil-cuantil, la distancia de Kolmogorov-Smirnov calculada a mano (la función de error se programó por serie de Taylor) y los cuantiles 50, 90 y 99. Guarda `figuras/02_ajuste_log.png`, `figuras/03_qq.png` y `resultados/validacion_A.rds`.
 
 ### `05_B1.R`: Monte Carlo y muestreo por importancia
-Estima la probabilidad de que la **pérdida acumulada de 5 días consecutivos supere un umbral $u$** bajo el modelo de la Fase A. El umbral se elige con una simulación de referencia de $4\times10^6$ réplicas para que la probabilidad sea cercana al 0,1 %. Se estima con Monte Carlo simple y con **muestreo por importancia**, con una propuesta diseñada por el grupo: la escala de la Weibull se multiplica por $c$ y la probabilidad de que un día sea de pérdida pasa de 1/2 a $q$. Incluye un **piloto** que compara muchas propuestas y muestra que una mala elección puede aumentar la varianza. Guarda `resultados/B1.rds`.
+Estima la probabilidad de que la pérdida acumulada de 5 días consecutivos supere un umbral $u$ bajo el modelo de la Fase A. El umbral se elige con una simulación de referencia de $4\times10^6$ réplicas para que la probabilidad sea cercana al 0,1 %. Se estima con Monte Carlo simple y con muestreo por importancia, con una propuesta diseñada por el grupo: la escala de la Weibull se multiplica por $c$ y la probabilidad de que un día sea de pérdida pasa de 1/2 a $q$. Incluye un piloto que compara muchas propuestas y muestra que una mala elección puede aumentar la varianza. Guarda `resultados/B1.rds`.
 
 ### `06_B2.R` y `07_B2_completo.R`: remuestreo
-Sobre los **retornos originales, con los ceros**, estudian la **desviación estándar** y el **VaR al 99 %** diario (cuantil 99 % de la pérdida $-r$):
+Sobre los retornos originales, con los ceros, estudian la desviación estándar y el VaR al 99 % diario (cuantil 99 % de la pérdida $-r$):
 - `06`: bootstrap percentil con $B = 5000$ réplicas (remuestreo programado a mano, sin paquetes).
-- `07`: **jackknife** (sesgo y error estándar), intervalo **BCa** (la aceleración sale de las réplicas jackknife de la muestra original) e **intervalos asintóticos** (método delta para la desviación estándar; estimación de la densidad con núcleo gaussiano para el VaR, con análisis de sensibilidad al ancho de banda). La normal estándar (cola y cuantil) se programó a mano.
+- `07`: jackknife (sesgo y error estándar), intervalo BCa (la aceleración sale de las réplicas jackknife de la muestra original) e intervalos asintóticos (método delta para la desviación estándar; estimación de la densidad con núcleo gaussiano para el VaR, con análisis de sensibilidad al ancho de banda). La normal estándar (cola y cuantil) se programó a mano.
 
 Guardan `figuras/04_bootstrap.png`, `figuras/05_intervalos.png`, `resultados/B2.rds` y `resultados/B2_completo.rds`.
 
 ### `funciones_EM.R`, `08_EM.R`, `09_EM_inicios.R`, `10_EM_interpretacion.R`: Fase C
 Parten del esqueleto de la docente (`esqueleto_EM.R`), con los bloques `TODO` completados sin cambiar los nombres de las funciones ni la estructura de `theta`:
-- `08`: pasos E y M, bucle EM, prueba con datos simulados de parámetros conocidos (`verificar_em()`) y EM sobre la serie real (retornos **con signo**, incluidos los ceros). Registra la log-verosimilitud por iteración y comprueba que nunca disminuye. Guarda `figuras/06_convergencia_EM.png`.
-- `09`: **12 inicios aleatorios**, **cuatro tolerancias de parada** y **casos degenerados** (componentes idénticos, desviación que tiende a cero). Guarda `figuras/07_inicios_EM.png`.
-- `10`: comparación con una sola normal mediante **BIC y AIC**, regímenes de calma y turbulencia, probabilidad diaria de turbulencia y **cola implicada** $P(|r|>\text{percentil 99})$. Guarda `figuras/08_prob_turbulencia.png`.
+- `08`: pasos E y M, bucle EM, prueba con datos simulados de parámetros conocidos (`verificar_em()`) y EM sobre la serie real (retornos con signo, incluidos los ceros). Registra la log-verosimilitud por iteración y comprueba que nunca disminuye. Guarda `figuras/06_convergencia_EM.png`.
+- `09`: 12 inicios aleatorios, cuatro tolerancias de parada y casos degenerados (componentes idénticos, desviación que tiende a cero). Guarda `figuras/07_inicios_EM.png`.
+- `10`: comparación con una sola normal mediante BIC y AIC, regímenes de calma y turbulencia, probabilidad diaria de turbulencia y cola implicada $P(|r|>\text{percentil 99})$. Guarda `figuras/08_prob_turbulencia.png`.
 
 ### `11_FaseD.R`: VaR por modelo y dependencia temporal
-Calcula el VaR a los niveles 95, 99, 99,5 y 99,9 % con el cuantil empírico, una normal única, la mezcla del EM y la Weibull de la Fase A con signos. Calcula, con función propia, la **autocorrelación** de $r$, $|r|$, $r^2$ y de la probabilidad de turbulencia, y un efecto de diseño aproximado. Guarda `figuras/09_acf.png`.
+Calcula el VaR a los niveles 95, 99, 99,5 y 99,9 % con el cuantil empírico, una normal única, la mezcla del EM y la Weibull de la Fase A con signos. Calcula, con función propia, la autocorrelación de $r$, $|r|$, $r^2$ y de la probabilidad de turbulencia, y un efecto de diseño aproximado. Guarda `figuras/09_acf.png`.
 
 ### `informe_avance.Rmd` e `informe_final.Rmd`
 Informes en R Markdown que siguen la estructura de la guía del informe. Las cifras, tablas y figuras se leen de `resultados/` y `figuras/`, y el anexo incluye el código.
@@ -168,7 +166,7 @@ Informes en R Markdown que siguen la estructura de la guía del informe. Las cif
 | Lognormal | $\hat\mu = -1{,}0035$, $\hat\sigma = 1{,}0411$ | −816,10 | 1636,21 |
 | Weibull | $\hat k = 1{,}1367$, $\hat\lambda = 0{,}5997$ | −766,13 | 1536,26 |
 
-Se elige la **Weibull** (diferencia de AIC de aproximadamente 100). La distancia de Kolmogorov-Smirnov (dos muestras) es 0,0221 para la Weibull y 0,0573 para la lognormal. La Weibull reproduce los cuantiles hasta el 99 %, mientras que la lognormal sobreestima mucho la cola (cuantil 99 % simulado cercano a 4,2 frente a 2,33 observado). La Weibull subestima algo el último 0,5 % de la cola.
+Se elige la Weibull (diferencia de AIC de aproximadamente 100). La distancia de Kolmogorov-Smirnov (dos muestras) es 0,0221 para la Weibull y 0,0573 para la lognormal. La Weibull reproduce los cuantiles hasta el 99 %, mientras que la lognormal sobreestima mucho la cola (cuantil 99 % simulado cercano a 4,2 frente a 2,33 observado). La Weibull subestima algo el último 0,5 % de la cola.
 
 **B1: pérdida acumulada de 5 días.** Umbral $u = 5{,}67$ (probabilidad de referencia $\approx 0{,}00098$).
 
@@ -178,7 +176,7 @@ Se elige la **Weibull** (diferencia de AIC de aproximadamente 100). La distancia
 | Muestreo por importancia ($N = 10^5$) | 0,000992 | $1{,}07\times10^{-5}$ |
 | Referencia ($4\times10^6$) | 0,000981 | $1{,}6\times10^{-5}$ |
 
-La **reducción de varianza** del muestreo por importancia es de aproximadamente **85 veces**.
+La reducción de varianza del muestreo por importancia es de aproximadamente 85 veces.
 
 **B2: intervalos de confianza al 95 %** (retornos originales, $B = 5000$).
 
@@ -211,22 +209,10 @@ La normal subestima el VaR en los niveles altos. Los retornos con signo no está
 
 Estas cifras salen de la ejecución con la semilla fija 2026. Los valores exactos que obtengas deben coincidir con los de `resultados/` y con el informe.
 
-## 8. Cumplimiento de las reglas de programación
-
-| Regla de la guía | Cómo se cumple |
-|---|---|
-| Sin funciones de ajuste de distribuciones (`fitdistr`) | La máxima verosimilitud es propia. `MASS::fitdistr` solo se usa para verificar, y se muestran ambos resultados lado a lado. |
-| Sin generadores no uniformes (`rweibull`, `rlnorm`) | Todo se genera desde `runif` con transformada inversa y Box-Muller. |
-| Sin paquetes de remuestreo ni de mezclas | El bootstrap y el jackknife se programaron a mano, y el EM se programó desde el esqueleto de la docente. |
-| Función de error para la normal | Se construye con `erf` por serie de Taylor y fracción continua; `pnorm` y `qnorm` solo verifican. |
-| Semilla fija | `set.seed(2026)` al inicio de cada script. |
-| Ejecución de principio a fin sin intervención manual | `source("run_all.R")`. |
-| Rutas relativas | No se usan rutas locales. |
-
-## 9. Supuestos y limitaciones
+## 8. Supuestos y limitaciones
 
 - **Ceros.** Se excluyen solo en la Fase A, porque Weibull y lognormal solo admiten valores positivos. El modelo ajustado nunca produce un retorno exactamente cero, mientras que en los datos ocurre en el 4 % de los días.
-- **Signos.** Asignar $+$ o $-$ con probabilidad 1/2, independiente de la magnitud, es un **supuesto del modelo**, no una propiedad demostrada de los datos.
+- **Signos.** Asignar $+$ o $-$ con probabilidad 1/2, independiente de la magnitud, es un supuesto del modelo, no una propiedad demostrada de los datos.
 - **Independencia.** Las simulaciones de B1, el bootstrap ordinario y la mezcla suponen observaciones independientes. La autocorrelación de $|r|$ lo contradice, así que los intervalos están probablemente subestimados. Un efecto de diseño aproximado de 3,3 sugiere que los errores estándar de estadísticos basados en $r^2$ podrían estar subestimados en un factor cercano a 1,8. Es una aproximación gruesa, no una corrección.
 - **Cola.** La Weibull subestima el último 0,5 % de la cola, que es la zona del evento raro de B1.
 - **Kolmogorov-Smirnov.** Como los parámetros se estimaron con los mismos datos, la distancia KS se interpreta como medida descriptiva, no como un contraste formal.
@@ -235,7 +221,7 @@ Estas cifras salen de la ejecución con la semilla fija 2026. Los valores exacto
 - **Fechas.** El archivo no trae fechas. Para ligar los días de turbulencia con hechos del mercado solo se pudo acotar la fecha (el período tiene 1.927 días hábiles para 1.866 observaciones), así que la relación con los eventos es aproximada.
 - **Valores cercanos a cero.** No hay datos entre 0 y 0,0198, aunque la Weibull esperaría unos 37. Es compatible con un redondeo de los precios originales, pero es solo una hipótesis que no podemos verificar con los archivos disponibles.
 
-## 10. Fuente de los datos
+## 9. Fuente de los datos
 
 Los datos provienen de los paquetes de R `Ecdat` (divisas e IBM) y `evir` (BMW y Siemens), tomados del repositorio Rdatasets:
 
